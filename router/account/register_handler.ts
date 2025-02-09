@@ -36,11 +36,14 @@ export default async function (req: express.Request, res: express.Response) {
         user_password: hashed_password,
       },
       () => {
-        const access_token = jwt.sign({ username });
+        const tokenpair = jwt.createTokenPair({
+          username,
+        });
 
         res.json(
           Ok({
-            access_token,
+            access_token: tokenpair.access_token,
+            refresh_token: tokenpair.refresh_token,
           })
         );
       }

@@ -34,14 +34,15 @@ export default async function (
       return next(new BadRequestError('password does not match'));
     }
 
-    const access_token = jwt.sign({
+    const tokenpair = jwt.createTokenPair({
       username,
     });
 
     res.json(
       Ok({
         username,
-        access_token,
+        access_token: tokenpair.access_token,
+        refresh_token: tokenpair.refresh_token,
       })
     );
   });
