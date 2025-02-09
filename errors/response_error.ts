@@ -29,9 +29,21 @@ export class NotFoundError extends ResponseError {
   }
 }
 
+export class ForbiddenError extends ResponseError {
+  constructor(message?: string) {
+    super(403, message || 'forbidden');
+  }
+}
+
 export class ConflictError extends ResponseError {
   constructor(message?: string) {
     super(409, message || 'conflict');
+  }
+}
+
+export class NotAcceptableError extends ResponseError {
+  constructor(message?: string) {
+    super(406, message || 'not acceptable');
   }
 }
 
@@ -39,3 +51,5 @@ export const defaultNotFound = new NotFoundError();
 export const defaultInternalServer = new InternalServerError();
 export const defaultBadRequest = new BadRequestError();
 export const defaultConflictError = new ConflictError();
+export const defaultNotAcceptable = new NotAcceptableError();
+export const defaultForbidden = new ForbiddenError();

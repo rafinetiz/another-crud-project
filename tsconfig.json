@@ -10,7 +10,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["router/**/*", "lib/**/*", "errors/**/*", "migrations/**/*", "repository/**/*"],
+  "include": ["router/**/*", "lib/**/*", "errors/**/*", "migrations/**/*", "repository/**/*", "middleware/**/*"],
   "files": [
     "entry.ts"
   ]

@@ -15,6 +15,14 @@ export const PAYLOAD = {
 
 export type PAYLOAD_TYPE = (typeof PAYLOAD)[keyof typeof PAYLOAD];
 
+export interface JwtPayload {
+  type: PAYLOAD_TYPE;
+}
+
+export interface AccessTokenPayload extends JwtPayload {
+  username: string;
+}
+
 export function set_key(_key: string | Buffer) {
   key = _key;
 }
