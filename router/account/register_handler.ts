@@ -1,4 +1,4 @@
-import express from 'express';
+import type express from 'express';
 import zod from 'zod';
 import bcrypt from 'bcryptjs';
 import RepositoryManager from '../../repository/repository_manager.js';
