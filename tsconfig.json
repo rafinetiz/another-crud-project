@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "lib": ["es2022"],
+    "target": "esnext",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["router/**/*", "lib/**/*", "errors/**/*", "migrations/**/*", "repository/**/*"],
+  "files": [
+    "entry.ts"
+  ]
+}
