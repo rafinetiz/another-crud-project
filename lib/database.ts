@@ -19,6 +19,7 @@ export class Transaction {
   public async query(query: string, values: any[]) {
     if (!this.is_begin) {
       await this._client.query('BEGIN');
+      this.is_begin = true;
     }
 
     try {
