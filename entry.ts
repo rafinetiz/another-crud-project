@@ -13,18 +13,8 @@ import {
   ResponseError,
 } from './errors/response_error.js';
 import { RepositoryManager } from './repository/repository_manager.js';
-
-import * as jwt from './lib/jwt.js';
-
-jwt.set_key(
-  env('JWT_KEY', (value) => {
-    if (!value) {
-      throw new Error('JWT_KEY is required but not provided');
-    }
-
-    return Buffer.from(value);
-  })
-);
+import verify_jwt_middleware from './middleware/verify_jwt_middleware.js';
+import { UserRouter } from './router/user/router.js';
 
 const zod_custom_error: zod.ZodErrorMap = (issues, ctx) => {
   if (issues.code === zod.ZodIssueCode.invalid_type) {
@@ -51,6 +41,7 @@ const port = env('APP_PORT', 8000);
 
 app.use(express.json());
 app.use('/account', AccountRouter());
+app.use('/user', verify_jwt_middleware, UserRouter());
 
 // untuk testing error
 app.get('/fatal', (_, _res) => {

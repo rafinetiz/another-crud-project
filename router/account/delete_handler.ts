@@ -7,7 +7,7 @@ import {
   NotAcceptableError,
 } from '../../errors/response_error.js';
 import repository_manager from '../../repository/repository_manager.js';
-import { decrypt, encrypt } from '../../lib/aes.js';
+import * as aes from '../../lib/aes.js';
 
 const DeleteRequestSchema = zod
   .object({
@@ -31,7 +31,7 @@ export default async function (req: express.Request, res: express.Response) {
       throw defaultBadRequest;
     }
 
-    const plaintext = decrypt({
+    const plaintext = aes.decrypt({
       ciphertext: Buffer.from(ciphertext, 'base64'),
       tag: Buffer.from(authtag, 'base64'),
     });
@@ -52,7 +52,7 @@ export default async function (req: express.Request, res: express.Response) {
       request_time: Date.now(),
     });
 
-    const { ciphertext, tag } = encrypt(payload);
+    const { ciphertext, tag } = aes.encrypt(payload);
     const token = ciphertext.toString('base64') + '$' + tag.toString('base64');
 
     res.json(Ok({ token }));

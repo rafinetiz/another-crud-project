@@ -85,7 +85,7 @@ export default class UserRepository {
     username: UserModel['user_name']
   ): Promise<UserModel | null> {
     const query = await this._conn.client.query<UserModel>(
-      'SELECT (user_id, user_name) FROM tbl_users WHERE user_name=$1 LIMIT 1',
+      'SELECT user_id, user_name FROM tbl_users WHERE user_name=$1 LIMIT 1',
       [username]
     );
 

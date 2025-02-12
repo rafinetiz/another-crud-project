@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { env } from '../lib/utils.js';
 
 /**
  * saat ini hanya support string key
@@ -6,7 +7,14 @@ import jwt from 'jsonwebtoken';
  * TODO:
  * load key from private/public key
  */
-let key: string | Buffer | null = null;
+
+const JWT_KEY = env('JWT_KEY', (value: string) => {
+  if (!value) {
+    throw new Error('JWT_KEY is required but not provided');
+  }
+
+  return Buffer.from(value);
+});
 
 export const PAYLOAD = {
   ACCESS_TOKEN: 0,
@@ -23,27 +31,15 @@ export interface AccessTokenPayload extends JwtPayload {
   username: string;
 }
 
-export function set_key(_key: string | Buffer) {
-  key = _key;
-}
-
 export function sign<T extends jwt.JwtPayload>(
   payload: T,
   options?: jwt.SignOptions
 ): string {
-  if (key === null) {
-    throw new Error('jsonwebtoken: signin payload failed. key === null');
-  }
-
-  return jwt.sign(payload, key, options);
+  return jwt.sign(payload, JWT_KEY, options);
 }
 
 export function verify<T>(token: string): T & jwt.JwtPayload {
-  if (key === null) {
-    throw new Error('jsonwebtoken: verify payload failed. key === null');
-  }
-
-  const data = jwt.verify(token, key, {
+  const data = jwt.verify(token, JWT_KEY, {
     complete: true,
   });
 
